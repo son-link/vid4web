@@ -22,7 +22,6 @@ var videobitrate = null;
 var command = null;
 const libui = require('libui-node');
 const ffmpeg = require('fluent-ffmpeg');
-const path = require('path');
 
 var mmm = require('mmmagic');
 var Magic = mmm.Magic;
@@ -38,36 +37,23 @@ window.setChild(vbox);
 
 const add_btn = libui.UiButton();
 add_btn.text = '<-'
-//vbox.append(add_btn, false);
-
-/*const form = libui.UiForm();
-form.padded = true;
-vbox.append(form, false);*/
 
 const grid = libui.UiGrid();
 grid.padded = true;
 vbox.append(grid, false)
 var inputText = libui.UiLabel();
 
-grid.append(libui.UiLabel('Entrada:'), 0, 0, 2, 1, 0, 0, 0, 1);
+grid.append(libui.UiLabel('Input:'), 0, 0, 2, 1, 0, 0, 0, 1);
 grid.append(add_btn, 2, 0, 2, 1, 0, 1, 1, 1);
 grid.append(inputText, 4, 0, 2, 1, 0, 0, 0, 1);
 
-grid.append(libui.UiLabel('Salida:'), 0, 1, 2, 1, 0, 0, 0, 1);
-
-/*var inputText = libui.UiLabel();
-form.append('Entrada:', inputText, false);*/
+grid.append(libui.UiLabel('Output:'), 0, 1, 2, 1, 0, 0, 0, 1);
 
 const out_btn = libui.UiButton();
 out_btn.text = '->';
 var outText = libui.UiLabel();
-
 grid.append(out_btn, 2, 1, 2, 1, 0, 1, 1, 1);
 grid.append(outText, 4, 1, 2, 1, 0, 0, 0, 1);
-
-//form.append('', out_btn, false);
-
-//form.append('Salida:', outText, false);
 
 const chooseRes = libui.UiCombobox();
 chooseRes.append(1080);
@@ -75,22 +61,20 @@ chooseRes.append(720);
 chooseRes.append(480);
 hbox1 = libui.UiHorizontalBox();
 hbox1.padded = true;
-hbox1.append(libui.UiLabel('Resolución:'), false)
+hbox1.append(libui.UiLabel('Resolution:'), false)
 hbox1.append(chooseRes, false)
 vbox.append(hbox1, false);
-
-//form.append('Resolución:', choseRes, false);
 
 hbox2 = libui.UiHorizontalBox();
 hbox2.padded = true;
 
 startButton = libui.UiButton();
-startButton.text = 'Empezar';
+startButton.text = 'Start';
 startButton.enabled = false;
 hbox2.append(startButton, false);
 
 stopButton = libui.UiButton();
-stopButton.text = 'Cancelar';
+stopButton.text = 'Cancel';
 stopButton.enabled = false;
 hbox2.append(stopButton, false);
 
@@ -112,7 +96,6 @@ window.onClosing(() => {
 	if (command){
 		command.kill().kill('SIGSTOP');
 		stopButton.enabled = false;
-		//command = null;
 	}
 	libui.stopLoop();
 });
@@ -162,7 +145,6 @@ stopButton.onClicked(() => {
 	if (command){
 		command.kill().kill('SIGSTOP');
 		stopButton.enabled = false;
-		//command = null;
 	}
 });
 
@@ -177,19 +159,15 @@ function convert(){
 		.audioCodec('aac').audioBitrate('128k').audioFrequency(44100)
 		.on('progress', function(progress) {
 			percent = Math.round(progress.percent);
-			//console.log('Processing: ' + percent + '% done');
 			progressBar.setValue(percent);
 			progressLabel.setText(percent+'%.');
 		})
 		.on('end', function() {
-			progressLabel.setText('100%. Completado');
+			progressLabel.setText('100%. Completed');
 			progressBar.setValue(100);
 			command.kill();
 			command = null;
 		})
-		/*.on('stderr', function(stderrLine) {
-			console.log('Stderr output: ' + stderrLine);
-		})*/
 		.on('error', function(err, stdout, stderr) {
 			console.log('Cannot process video: ' + err.message);
 		}).save(output);

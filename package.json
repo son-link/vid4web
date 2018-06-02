@@ -1,0 +1,33 @@
+{
+  "name": "vid4web",
+  "version": "0.1.0",
+  "description": "Video converter to convert any video to a web ready format using FFMPEG",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository" : {
+	"type" : "git"
+	"url" : "https://github.com/son-link/vid4web"
+  },
+  "homepage": "https://github.com/son-link/vid4web",
+  "bugs": {
+    "url": "https://github.com/son-link/vid4web/issues"
+},
+  "keywords": [
+    "video",
+    "ffmpeg",
+    "web",
+    "web-video",
+    "convert",
+    "video-convert"
+  ],
+  "author": "Alfonso Saavedra 'Son Link'",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "fluent-ffmpeg": "^2.1.2",
+    "libui-node": "^0.2.1",
+    "mmmagic": "^0.5.0"
+  }
+}

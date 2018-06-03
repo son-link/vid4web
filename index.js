@@ -22,6 +22,14 @@ var videobitrate = null;
 var command = null;
 const libui = require('libui-node');
 const ffmpeg = require('fluent-ffmpeg');
+const i18n = require('i18n');
+i18n.configure({
+	directory: __dirname + '/locales'
+});
+
+const osLocale = require('os-locale');
+locale = osLocale.sync().substr(0,2);
+i18n.setLocale(locale);
 
 var mmm = require('mmmagic');
 var Magic = mmm.Magic;
@@ -43,11 +51,11 @@ grid.padded = true;
 vbox.append(grid, false)
 var inputText = libui.UiLabel();
 
-grid.append(libui.UiLabel('Input:'), 0, 0, 2, 1, 0, 0, 0, 1);
+grid.append(libui.UiLabel(i18n.__('Input:')), 0, 0, 2, 1, 0, 0, 0, 1);
 grid.append(add_btn, 2, 0, 2, 1, 0, 1, 1, 1);
 grid.append(inputText, 4, 0, 2, 1, 0, 0, 0, 1);
 
-grid.append(libui.UiLabel('Output:'), 0, 1, 2, 1, 0, 0, 0, 1);
+grid.append(libui.UiLabel(i18n.__('Output:')), 0, 1, 2, 1, 0, 0, 0, 1);
 
 const out_btn = libui.UiButton();
 out_btn.text = '->';
@@ -61,7 +69,7 @@ chooseRes.append(720);
 chooseRes.append(480);
 hbox1 = libui.UiHorizontalBox();
 hbox1.padded = true;
-hbox1.append(libui.UiLabel('Resolution:'), false)
+hbox1.append(libui.UiLabel(i18n.__('Resolution:')), false)
 hbox1.append(chooseRes, false)
 vbox.append(hbox1, false);
 
@@ -69,12 +77,12 @@ hbox2 = libui.UiHorizontalBox();
 hbox2.padded = true;
 
 startButton = libui.UiButton();
-startButton.text = 'Start';
+startButton.text = i18n.__('Start');
 startButton.enabled = false;
 hbox2.append(startButton, false);
 
 stopButton = libui.UiButton();
-stopButton.text = 'Cancel';
+stopButton.text = i18n.__('Cancel');
 stopButton.enabled = false;
 hbox2.append(stopButton, false);
 
@@ -86,6 +94,17 @@ vbox.append(progressLabel, false);
 progressBar = libui.UiProgressBar();
 vbox.append(progressBar, false);
 progressBar.value = 0
+
+hs = new libui.UiHorizontalSeparator();
+vbox.append(hs, false);
+
+hbox3 = libui.UiHorizontalBox();
+hbox3.padded = true;
+hbox3.append(libui.UiLabel(i18n.__('Status:')), false);
+
+const statusLabel = libui.UiLabel();
+hbox3.append(statusLabel, false);
+vbox.append(hbox3, false);
 
 libui.onShouldQuit(() => {
 	window.close();
@@ -137,6 +156,7 @@ startButton.onClicked(() => {
 	if (id >= 0){
 		resolution = resolutions[id].res;
 		videobitrate = resolutions[id].vb;
+		statusLabel.setText(i18n.__('Converting'));
 		convert();
 	}
 });
@@ -163,13 +183,14 @@ function convert(){
 			progressLabel.setText(percent+'%.');
 		})
 		.on('end', function() {
-			progressLabel.setText('100%. Completed');
+			progressLabel.setText('100%');
+			statusLabel.setText(i18n.__('Completed'));
 			progressBar.setValue(100);
 			command.kill();
 			command = null;
 		})
 		.on('error', function(err, stdout, stderr) {
-			console.log('Cannot process video: ' + err.message);
+			statusLabel.setText(i18n.__('Cannot process video'));
 		}).save(output);
 	}
 }

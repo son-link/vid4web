@@ -6,5 +6,17 @@
 	"Cancel": "Cancelar",
 	"Status:": "Estado:",
 	"Completed": "Completado",
-	"Converting": "Convirtiendo"
+	"Converting": "Convirtiendo",
+	"Convert": "Convertir",
+	"Options": "Opciones",
+	"Format:": "Formato:",
+	"Cannot process video": "No se pudo procesar el vídeo",
+	"Error": "Error",
+	"An error occurred while processing the video.": "Ocurrió un error mientras de procesaba el vídeo.",
+	"The video was converted correctly.": "El vídeo se convirtió correctamente.",
+	"Process canceled": "Process cancelado",
+	"Vid4Web: Cancel": "Vid4Web: Cancelar",
+	"Yes": "Si",
+	"No": "No",
+	"You really want to cancel the conversion?": "¿Realmente quiere cancelar la conversión?"
 }

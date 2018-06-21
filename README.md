@@ -44,3 +44,15 @@ npm install -g vid4web
 * **I only select 3 resolutions. Is posible to add custom resolution?** Not at the moment. I add the 3 popular resolutions. Under 480p (858x480) the video is small, and upper 1080p (1920x1080) the video size is too big. Maybe in the future i add custom fields for resolution, video bitrate, etc.
 
 * **What Operative Systems support?** It's avaliable for **GNU/Linux**, **Windows** and **MacOS**, but i do not use the 2 lasts S.O. and i can upload precompiled versions for this systems.
+
+* What browser supports WebM and/or MP4?:
+
+| browser  | WebM | MP4 |
+|::|:----:|:---:|
+| Firefox | &#10003; | &#10003; |
+| Chrome | &#10003; | &#10003; |
+| Edge * | &#10005; | &#10003; |
+| Safari | &#10005; | &#10003; |
+| Opera Mini | &#10005; | &#10003; |
+
+**\*** Edge only support WebM with the **VP9** video codec.
